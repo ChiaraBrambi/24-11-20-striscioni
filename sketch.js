@@ -27,7 +27,7 @@ function preload() {
 /////////////////////////////////////////////////////////////////////////
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  frameRate(20); //rallenta
+  frameRate(15); //rallenta
 
   //BOTTONI
 
