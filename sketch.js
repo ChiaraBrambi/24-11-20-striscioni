@@ -1,4 +1,4 @@
-let baloonIcon, baloonBIcon, tut1Icon, tut2Icon, logor,freccia; //icone
+let baloonIcon, baloonBIcon, tutIconB, logor,freccia; //icone
 let xBarra = 20; //lunghezza barra %
 let w, h; //posizione
 let s=0;//ellisse BONUS
@@ -19,8 +19,7 @@ let b1,b2;
 function preload() {
   baloonIcon = loadImage("./assets/baloon.png"); //nuvoletta scura
   baloonBIcon = loadImage("./assets/baloonB.png"); //nuvoletta chiara
-  tut1Icon = loadImage("./assets/Trombetta_tut_1.png")//trombetta tutorial 1
-  tut2Icon = loadImage("./assets/Trombetta_tut_2.gif")//trombetta tutorial 2
+  tutIconB = loadImage("./assets/Tutorial_Esclamazioni.gif")//tutorial
   logor = loadImage("./assets/logopiccolo.png")//logo ridotto
   freccia = loadImage("./assets/freccia.png");
 }
@@ -28,7 +27,14 @@ function preload() {
 /////////////////////////////////////////////////////////////////////////
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  frameRate(15); //rallenta
+  frameRate(20); //rallenta
+
+  //BOTTONI
+
+    b1 = createButton('FORZA');
+    b1.position((width/2-330),height/2-30);
+    b2 = createButton('BRAVI')
+    b2.position((width/2+100),height/2-30);
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -80,33 +86,28 @@ function draw() {
     s =25*i;
     }
 /////////////////// LA PARTE SOPRA è STANDARD ///////////////////////////////////////////////
-//BOTTONI
 
-  b1 = createButton('FORZA');
-  b1.position((width/2-330),height/2-30);
-  b2 = createButton('BRAVI')
-  b2.position((width/2+100),height/2-30);
 
 //BARRE DEL SUONO TROMBETTA
-  // if (frameCount % 50 == 0) { //multiplo di 50 incrementa i
-  //   i++
-  // }
-  // //barrette lato sinistro
-  // for (var x = width / 6 * 1.5; x < width / 2.2; x += 40) {
-  //   if (i % 2 != 0) { //quando i è dispari altezza deve diventare 1*random
-  //     alt = 1 * random(2, 10);
-  //     n_trombetta++;
-  //   } else {
-  //     alt = 1;
-  //     n_trombetta = 0.1;
-  //   }
-  //   //liniette suono della trombetta
-  //   noStroke();
-  //   fill(135, 123, 133);
-  //   rectMode(CENTER);
-  //   rect(x, height / 2, 15, 15 * alt, 20);
-  //   rect(x + width / 3.15, height / 2, 15, 15 * alt, 20);
-  // }
+  if (frameCount % 50 == 0) { //multiplo di 50 incrementa i
+    i++
+  }
+  //barrette lato sinistro
+  for (var x = width / 6 * 1.5; x < width / 2.2; x += 40) {
+    if (i % 2 != 0) { //quando i è dispari altezza deve diventare 1*random
+      alt = 1 * random(2, 10);
+      n_trombetta++;
+    } else {
+      alt = 1;
+      n_trombetta = 0.1;
+    }
+    //liniette suono della trombetta
+    // noStroke();
+    // fill(135, 123, 133);
+    // rectMode(CENTER);
+    // rect(x, height / 2, 15, 15 * alt, 20);
+    // rect(x + width / 3.15, height / 2, 15, 15 * alt, 20);
+  }
 
   //PERCENTUALE
     text(p_coord + '%',w+(width/28), h*6.5 ); //w, height / 5 * 4.5
@@ -121,19 +122,16 @@ function draw() {
     p_coord = 0;
   }
 
-//   textSize(16);
-//   fill('#B7AEB5'); //3 PALETTE
-// //TUTORIAL TROMBETTA
-// if(i== 0 || i==2){
-// image(tut1Icon, width / 2, height / 2, tut1Icon.width / 7, tut1Icon.height / 7);
-// text('TUTORIAL', width / 2, height / 6*3.5);
-// } else if (i==1 || i==3){
-// image(tut2Icon, width / 2, height / 2, tut2Icon.width / 7, tut2Icon.height / 7);
-// text('TUTORIAL', width / 2, height / 6*3.5);
-//}
+  textSize(16);
+  fill('#B7AEB5'); //3 PALETTE
+//TUTORIAL TROMBETTA
+if(i<3 ||i==3){
+image(tutIconB, width / 2, height / 2, tutIconB.width / 4, tutIconB.height / 4);
+text('TUTORIAL', width / 2, height / 6*3.5);
+}
 
 //ICONE NORMALI
-if (keyIsDown(ENTER)) {//&& i>3
+if (keyIsDown(ENTER) && i>3) {
     push();
     fill('#877B85');
     noStroke();
@@ -141,7 +139,7 @@ if (keyIsDown(ENTER)) {//&& i>3
     ellipse(width / 2, height / 2, 100); //cerchio centrale
     image(baloonBIcon, width / 2, height / 2, baloonBIcon.width / 6, baloonBIcon.height / 6);
     pop();
-  }else if (keyIsDown(ENTER)==false){//&& i>3 --> da riinserire per il tutorial, cambio colore dle bottone centrale: feedback utente
+  }else if (keyIsDown(ENTER)==false && i>3 ){ // cambio colore dle bottone centrale: feedback utente
   push();
   noFill();
   stroke('#877B85');
