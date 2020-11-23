@@ -26,7 +26,7 @@ let n_interazione = 0; //var utente usa la trobetta, preme bottone
 
 function preload() {
   baloonIcon = loadImage("./assets/baloon.png"); //nuvoletta scura
-  baloonBIcon = loadImage("./assets/baloonB.png"); //nuvoletta chiara
+  baloonBIcon = loadImage("./assets/nuvolettaB.png"); //nuvoletta chiara
   tutIconB = loadImage("./assets/Tutorial_Esclamazioni.gif")//tutorial
   logor = loadImage("./assets/logopiccolo.png")//logo ridotto
   freccia = loadImage("./assets/freccia.png");
@@ -179,7 +179,7 @@ pop();
   fill('#B7AEB5'); //3 PALETTE
 //TUTORIAL TROMBETTA
 if(i<3 || i==3){
-image(tutIconB, width / 2, height / 2, tutIconB.width / 4, tutIconB.height /4);
+image(tutIconB, width / 2, height / 2, tutIconB.width/3, tutIconB.height/3);
 //text('TUTORIAL', width /20*10, height / 6*3.7);
 text('Esulta con una parola', w, height / 6*3.5);
 }
@@ -191,7 +191,7 @@ if (vol>0 && i>3) {
     noStroke();
     strokeWeight(5);
     ellipse(width / 2, height / 2, 100); //cerchio centrale
-    image(baloonBIcon, width / 2, height / 2, baloonBIcon.width / 6, baloonBIcon.height / 6);
+    image(baloonBIcon, width / 2, height / 2, baloonBIcon.width / 1.5, baloonBIcon.height / 1.5);
     pop();
   }else if (i>3 ){ // cambio colore dle bottone centrale: feedback utente
   push();
@@ -199,7 +199,7 @@ if (vol>0 && i>3) {
   stroke('#877B85');
   strokeWeight(5);
   ellipse(width / 2, height / 2, 100); //cerchio centrale
-  image(baloonIcon, width / 2, height / 2, baloonIcon.width / 6, baloonIcon.height / 6); // trombetta scura
+  image(baloonIcon, width / 2, height / 2, baloonIcon.width / 1.5, baloonIcon.height / 1.5); // trombetta scura
   pop();}
 }
 
