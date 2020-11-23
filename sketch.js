@@ -5,6 +5,7 @@ let textColorS = '#877B85';
 let textColorD = '#877B85';
 let bButtonColorS = '#F9F9F9';
 let bButtonColorD = '#F9F9F9';
+
 //icone
 let baloonIcon, baloonBIcon, tutIconB, logor,freccia; //icone
 let xBarra = 20; //lunghezza barra %
@@ -21,7 +22,6 @@ let n_trombetta = 0; //var piattaforma: quando alt!=1 viene incrementata
 let n_interazione = 0; //var utente usa la trobetta, preme bottone
 //se faccio ntrombetta/niterazione trovo la coordinazione
 
-let b1,b2;
 /////////////////////////////////////////////////////////////////////////
 
 function preload() {
@@ -40,18 +40,18 @@ function setup() {
   let continuous = true;//continua a registrare
   let interim = true;
   speechRec.start(continuous, interim);
+
+  //microfono get: Create an Audio input
+  mic = new p5.AudioIn();
+  mic.start();
 }
 
 //////////riconoscimento voce funzione//////////////////////////////////////////////////////////////
 
 function gotSpeech() {
 
-    if (speechRec.resultValue) {
-        //createP(speechRec.resultString);
-      }
-
   if (speechRec.resultValue) {
-    if(speechRec.resultString =='wow'){
+    if(speechRec.resultString =='yeah'){
       //sx
       bButtonColorS = '#877B85';
       textColorS = '#F9F9F9';
@@ -113,6 +113,10 @@ function draw() {
     s =25*i;
     }
 /////////////////// LA PARTE SOPRA è STANDARD ///////////////////////////////////////////////
+//microfono
+  let vol = round( mic.getLevel() , 2) *1000;
+  console.log('volume: ' +  vol);
+
 
 push();
 //scritte bottoni
@@ -130,7 +134,7 @@ noStroke();
 textSize(30);
 textAlign(CENTER,TOP);
 fill(textColorS)//viola
-text('wow',width/3,height/2-15);
+text('yeah',width/3,height/2-15);
 fill(textColorD)//viola
 text('baby',width/3*2,height/2-15);
 pop();
@@ -178,15 +182,15 @@ text('TUTORIAL', width / 2, height / 6*3.5);
 }
 
 //ICONE NORMALI
-if (keyIsDown(ENTER) && i>3) {
-    push();
+if (vol>0 && i>3) {
+    push();//tasto scuro attivo
     fill('#877B85');
     noStroke();
     strokeWeight(5);
     ellipse(width / 2, height / 2, 100); //cerchio centrale
     image(baloonBIcon, width / 2, height / 2, baloonBIcon.width / 6, baloonBIcon.height / 6);
     pop();
-  }else if (keyIsDown(ENTER)==false && i>3 ){ // cambio colore dle bottone centrale: feedback utente
+  }else if (i>3 ){ // cambio colore dle bottone centrale: feedback utente
   push();
   noFill();
   stroke('#877B85');
