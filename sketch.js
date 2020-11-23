@@ -179,8 +179,8 @@ pop();
   fill('#B7AEB5'); //3 PALETTE
 //TUTORIAL TROMBETTA
 if(i<3 || i==3){
-image(tutIconB, width / 2, height / 2, tutIconB.width / 4.5, tutIconB.height /4.5);
-text('TUTORIAL', width /20*10, height / 6*3.7);
+image(tutIconB, width / 2, height / 2, tutIconB.width / 4, tutIconB.height /4);
+//text('TUTORIAL', width /20*10, height / 6*3.7);
 text('Esulta con una parola', w, height / 6*3.5);
 }
 
