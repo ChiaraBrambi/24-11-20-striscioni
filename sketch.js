@@ -1,3 +1,11 @@
+//impostazioni riconoscimento vocale
+let lang = navigator.language || 'it-IT';
+let speechRec = new p5.SpeechRec(lang, gotSpeech);
+let textColorS = '#877B85';
+let textColorD = '#877B85';
+let bButtonColorS = '#F9F9F9';
+let bButtonColorD = '#F9F9F9';
+//icone
 let baloonIcon, baloonBIcon, tutIconB, logor,freccia; //icone
 let xBarra = 20; //lunghezza barra %
 let w, h; //posizione
@@ -28,15 +36,34 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(15); //rallenta
-
-  //BOTTONI
-
-    b1 = createButton('FORZA');
-    b1.position((width/2-330),height/2-30);
-    b2 = createButton('BRAVI')
-    b2.position((width/2+100),height/2-30);
+//impostazioni riconoscimento vocale
+  let continuous = true;//continua a registrare
+  let interim = true;
+  speechRec.start(continuous, interim);
 }
 
+//////////riconoscimento voce funzione//////////////////////////////////////////////////////////////
+
+function gotSpeech() {
+
+    if (speechRec.resultValue) {
+        //createP(speechRec.resultString);
+      }
+
+  if (speechRec.resultValue) {
+    if(speechRec.resultString =='wow'){
+      //sx
+      bButtonColorS = '#877B85';
+      textColorS = '#F9F9F9';
+
+
+  }else if (speechRec.resultString =='baby') {
+    bButtonColorD = '#877B85';
+    textColorD = '#F9F9F9';
+
+    }
+  }
+}
 /////////////////////////////////////////////////////////////////////////
 function draw() {
   background('#F9F9F9'); //chiaro
@@ -87,6 +114,26 @@ function draw() {
     }
 /////////////////// LA PARTE SOPRA è STANDARD ///////////////////////////////////////////////
 
+push();
+//scritte bottoni
+rectMode(CENTER);
+stroke(textColorS)//viola
+strokeWeight(5);
+fill(bButtonColorS)//bianco
+rect(width/3,height/2,200,100,40);
+stroke(textColorD)//viola
+strokeWeight(5);
+fill(bButtonColorD)//bianco
+rect(width/3*2,height/2,200,100,40);
+
+noStroke();
+textSize(30);
+textAlign(CENTER);
+fill(textColorS)//viola
+text('wow',width/3,height/2);
+fill(textColorD)//viola
+text('baby',width/3*2,height/2);
+pop();
 
 //BARRE DEL SUONO TROMBETTA
   if (frameCount % 50 == 0) { //multiplo di 50 incrementa i
