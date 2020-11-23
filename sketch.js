@@ -120,19 +120,19 @@ rectMode(CENTER);
 stroke(textColorS)//viola
 strokeWeight(5);
 fill(bButtonColorS)//bianco
-rect(width/3,height/2,200,100,40);
+rect(width/3,height/2,300,60,40);
 stroke(textColorD)//viola
 strokeWeight(5);
 fill(bButtonColorD)//bianco
-rect(width/3*2,height/2,200,100,40);
+rect(width/3*2,height/2,300,60,40);
 
 noStroke();
 textSize(30);
-textAlign(CENTER);
+textAlign(CENTER,TOP);
 fill(textColorS)//viola
-text('wow',width/3,height/2);
+text('wow',width/3,height/2-15);
 fill(textColorD)//viola
-text('baby',width/3*2,height/2);
+text('baby',width/3*2,height/2-15);
 pop();
 
 //BARRE DEL SUONO TROMBETTA
