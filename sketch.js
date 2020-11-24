@@ -55,13 +55,12 @@ function gotSpeech() {
       //sx
       bButtonColorS = '#877B85';
       textColorS = '#F9F9F9';
-
-
-  }else if (speechRec.resultString =='baby') {
+  }else if (speechRec.resultString =='good') {
     bButtonColorD = '#877B85';
     textColorD = '#F9F9F9';
-
     }
+
+    console.log(speechRec.resultString);
   }
 }
 /////////////////////////////////////////////////////////////////////////
@@ -117,7 +116,7 @@ function draw() {
 /////////////////// LA PARTE SOPRA è STANDARD ///////////////////////////////////////////////
 //microfono
   let vol = round( mic.getLevel() , 2) *1000;
-  console.log('volume: ' +  vol);
+  //console.log('volume: ' +  vol);
 
 
 push();
@@ -138,7 +137,7 @@ textAlign(CENTER,TOP);
 fill(textColorS)//viola
 text('YEAH',width/20*6,height/2-15);
 fill(textColorD)//viola
-text('BABY',width/20*14,height/2-15);
+text('GOOD',width/20*14,height/2-15);
 pop();
 
 //BARRE DEL SUONO TROMBETTA
@@ -180,7 +179,7 @@ pop();
 //TUTORIAL TROMBETTA
 if(i<3 || i==3){
 image(tutIconB, width / 2, height / 2, tutIconB.width/3, tutIconB.height/3);
-//text('TUTORIAL', width /20*10, height / 6*3.7);
+text('TUTORIAL', width /20*10, height / 6*3.7);
 text('Esulta con una parola', w, height / 6*3.5);
 }
 
