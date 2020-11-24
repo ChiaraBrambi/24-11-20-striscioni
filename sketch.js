@@ -7,7 +7,7 @@ let bButtonColorS = '#F9F9F9';
 let bButtonColorD = '#F9F9F9';
 
 //icone
-let baloonIcon, baloonBIcon, tutIconB, logor,freccia; //icone
+let baloonIcon, baloonBIcon, tut1Icon, tut2Icon, logor,freccia; //icone
 let xBarra = 20; //lunghezza barra %
 let w, h; //posizione
 let s=0;//ellisse BONUS
@@ -27,7 +27,8 @@ let n_interazione = 0; //var utente usa la trobetta, preme bottone
 function preload() {
   baloonIcon = loadImage("./assets/baloon.png"); //nuvoletta scura
   baloonBIcon = loadImage("./assets/nuvolettaB.png"); //nuvoletta chiara
-  tutIconB = loadImage("./assets/Tutorial_Esclamazioni-15fps.gif")//tutorial
+  tut2Icon = loadImage("./assets/Tutorial_barrette.gif")//tutorial
+  tut1Icon = loadImage("./assets/TutorialP.gif")//tutorial
   logor = loadImage("./assets/logopiccolo.png")//logo ridotto
   freccia = loadImage("./assets/freccia.png");
 }
@@ -149,8 +150,8 @@ pop();
 push();
   textSize(16);
   fill('#B7AEB5'); //3 PALETTE
-if(i<=3 ){
-image(tutIconB, width / 2, height / 2, tutIconB.width/3.5, tutIconB.height/3.5);
+if(i<2 || i==2 ){
+image(tut1Icon, width / 2, height / 2, tut1Icon.width/3.5, tut1Icon.height/3.5);
 text('TUTORIAL', width /20*10, height / 6*3.7);
 text('Esulta con una parola', w, height / 6*3.5);
 }
@@ -188,7 +189,7 @@ pop();
 
 
 //ICONE NORMALI
-if (vol>0 && i>3) {
+if (vol>0 && i>2) {
     push();//tasto scuro attivo
     fill('#877B85');
     noStroke();
@@ -196,7 +197,7 @@ if (vol>0 && i>3) {
     ellipse(width / 2, height / 2, 100); //cerchio centrale
     image(baloonBIcon, width / 2, height / 2, baloonBIcon.width / 1.5, baloonBIcon.height / 1.5);
     pop();
-  }else if (i>3 ){ // cambio colore dle bottone centrale: feedback utente
+  }else if (i>2 ){ // cambio colore dle bottone centrale: feedback utente
   push();
   noFill();
   stroke('#877B85');
