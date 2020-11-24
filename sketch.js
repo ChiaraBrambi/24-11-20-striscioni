@@ -27,7 +27,7 @@ let n_interazione = 0; //var utente usa la trobetta, preme bottone
 function preload() {
   baloonIcon = loadImage("./assets/baloon.png"); //nuvoletta scura
   baloonBIcon = loadImage("./assets/nuvolettaB.png"); //nuvoletta chiara
-  tutIconB = loadImage("./assets/Tutorial_Esclamazioni.gif")//tutorial
+  tutIconB = loadImage("./assets/Tutorial_Esclamazioni-15fps.gif")//tutorial
   logor = loadImage("./assets/logopiccolo.png")//logo ridotto
   freccia = loadImage("./assets/freccia.png");
 }
@@ -144,6 +144,17 @@ pop();
   if (frameCount % 50 == 0) { //multiplo di 50 incrementa i
     i++
   }
+
+//TUTORIAL TROMBETTA
+push();
+  textSize(16);
+  fill('#B7AEB5'); //3 PALETTE
+if(i<=3 ){
+image(tutIconB, width / 2, height / 2, tutIconB.width/3.5, tutIconB.height/3.5);
+text('TUTORIAL', width /20*10, height / 6*3.7);
+text('Esulta con una parola', w, height / 6*3.5);
+}
+pop();
   //barrette lato sinistro
   for (var x = width / 6 * 1.5; x < width / 2.2; x += 40) {
     if (i % 2 != 0) { //quando i è dispari altezza deve diventare 1*random
@@ -174,14 +185,7 @@ pop();
     p_coord = 0;
   }
 
-  textSize(16);
-  fill('#B7AEB5'); //3 PALETTE
-//TUTORIAL TROMBETTA
-if(i<3 || i==3){
-image(tutIconB, width / 2, height / 2, tutIconB.width/3, tutIconB.height/3);
-text('TUTORIAL', width /20*10, height / 6*3.7);
-text('Esulta con una parola', w, height / 6*3.5);
-}
+
 
 //ICONE NORMALI
 if (vol>0 && i>3) {
