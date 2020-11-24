@@ -7,7 +7,7 @@ let bButtonColorS = '#F9F9F9';
 let bButtonColorD = '#F9F9F9';
 
 //icone
-let baloonIcon, baloonBIcon, tut1Icon, tut2Icon, logor,freccia; //icone
+let baloonIcon, baloonBIcon, logor,freccia; //icone tutIcon, tutIcon,
 let xBarra = 20; //lunghezza barra %
 let w, h; //posizione
 let s=0;//ellisse BONUS
@@ -27,8 +27,8 @@ let n_interazione = 0; //var utente usa la trobetta, preme bottone
 function preload() {
   baloonIcon = loadImage("./assets/baloon.png"); //nuvoletta scura
   baloonBIcon = loadImage("./assets/nuvolettaB.png"); //nuvoletta chiara
-  tut2Icon = loadImage("./assets/Tutorial_barrette.gif")//tutorial
-  tut1Icon = loadImage("./assets/TutorialP.gif")//tutorial
+  //tut2Icon = loadImage("./assets/Tutorial_barrette.gif")//tutorial
+//  tut1Icon = loadImage("./assets/TutorialP.gif")//tutorial
   logor = loadImage("./assets/logopiccolo.png")//logo ridotto
   freccia = loadImage("./assets/freccia.png");
 }
@@ -141,22 +141,25 @@ fill(textColorD)//viola
 text('GOOD',width/20*14,height/2-15);
 pop();
 
-//BARRE DEL SUONO TROMBETTA
+//ritmo
   if (frameCount % 50 == 0) { //multiplo di 50 incrementa i
     i++
   }
 
-//TUTORIAL TROMBETTA
+//TUTORIAL
 push();
   textSize(16);
   fill('#B7AEB5'); //3 PALETTE
 if(i<2 || i==2 ){
-image(tut1Icon, width / 2, height / 2, tut1Icon.width/3.5, tut1Icon.height/3.5);
+document.getElementById("tutorial").style.display= "block";
+//image(tut1Icon, width / 2, height / 2, tut1Icon.width/3.5, tut1Icon.height/3.5);
 text('TUTORIAL', width /20*10, height / 6*3.7);
 text('Esulta con una parola', w, height / 6*3.5);
+}else{
+document.getElementById("tutorial").style.display= "none";
 }
 pop();
-  //barrette lato sinistro
+  //barrette suono
   for (var x = width / 6 * 1.5; x < width / 2.2; x += 40) {
     if (i % 2 != 0) { //quando i è dispari altezza deve diventare 1*random
       alt = 1 * random(2, 10);

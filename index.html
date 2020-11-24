@@ -21,9 +21,22 @@
       padding-right: 60px;
       font-family: 'Quicksand', sans-serif;
       text-align: center;
-
       }
-
+#schermo{
+    position:absolute;
+    margin:0;
+    width:100%;
+    height: 100%;
+    z-index:1;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+#tutorial{
+    display: none;
+    width: 70.959px;
+    height: 67.369px;
+}
     </style>
     <script src="p5.min.js"></script>
     <script src="p5.sound.min.js"></script>
@@ -31,5 +44,8 @@
     <script src="sketch.js"></script>
   </head>
   <body>
+    <div id='schermo'>
+      <img src="./assets/Tutorial_E.gif" id="tutorial">
+    </div>
   </body>
 </html>
