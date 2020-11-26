@@ -48,23 +48,23 @@ function setup() {
 ////////// Riconoscimento vocale parole //////////////////////////////////////////////////////////////
 
 function gotSpeech() {
+  if (i > 3 || i == 3) {
+    if (speechRec.resultValue) {
+      if (speechRec.resultString == 'yeah') {
+        //sx
+        bButtonColorS = '#877B85';
+        textColorS = '#F9F9F9';
+        input_utente = 1;
 
-  if (speechRec.resultValue) {
-    if (speechRec.resultString == 'yeah') {
-      //sx
-      bButtonColorS = '#877B85';
-      textColorS = '#F9F9F9';
-      input_utente = 1;
+      } else if (speechRec.resultString == 'good') {
+        bButtonColorD = '#877B85';
+        textColorD = '#F9F9F9';
+        input_utente = 1;
+      }
 
-    } else if (speechRec.resultString == 'good') {
-      bButtonColorD = '#877B85';
-      textColorD = '#F9F9F9';
-      input_utente = 1;
+      console.log(speechRec.resultString);
     }
-
-    console.log(speechRec.resultString);
   }
-
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -163,9 +163,9 @@ function draw() {
 
 
   //ICONA CENTRALE CHE REAGISCE AL MIC
-  if ( i>1 && i <3 ) {
+  if (i > 1 && i < 3) {
     image(baloon_Puntini, width / 2, height / 2, baloon_Puntini.width / 4, baloon_Puntini.height / 4);
-  } else if ( i > 3 ||i == 3) { // cambio colore del bottone centrale: feedback utente
+  } else if (i > 3 || i == 3) { // cambio colore del bottone centrale: feedback utente
     image(baloonIcon, width / 2, height / 2, baloonIcon.width / 4, baloonIcon.height / 4);
   }
 
@@ -185,28 +185,17 @@ function draw() {
   textSize(16);
   fill('#B7AEB5'); //3 PALETTE
   if (i < 1 || i == 1) {
-  document.getElementById("tutorial").style.display = "block";
-    //image(tut1Icon, width / 2, height / 2, tut1Icon.width/3.5, tut1Icon.height/3.5);
-    //text('TUTORIAL', w*10, height / 6*3.7);
-    text('Scegli una parola', w * 10, h * 31);
-    text('ESULTA QUANDO RICHIESTO', w * 10, h * 33);
-  //   if (vol > 0 && i <= 2) {
-  //     text('TI SENTO', w * 10, h * 33);
-  //     document.getElementById("tutorial").style.display = "block";
-  //   } else {
-  //     text('PARLA QUANDO TI VIENE RICHIESTO', w * 10, h * 33);
-  //     document.getElementById("tutorial").style.display = "block";
-  //   }
-   } else {
-     document.getElementById("tutorial").style.display = "none";
-  // }
-  // pop();
-    }
+    document.getElementById("tutorial").style.display = "block";
+      text('Scegli una parola', w * 10, h * 31);
+        text('ESULTA QUANDO RICHIESTO', w * 10, h * 33);
+      } else {
+    document.getElementById("tutorial").style.display = "none";
+  }
 
 }
-  ////////fine draw///////////////////////////////////////////////////////////////////////////////////
+////////fine draw///////////////////////////////////////////////////////////////////////////////////
 
 
-  function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-  }
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
