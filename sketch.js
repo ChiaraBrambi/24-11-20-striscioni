@@ -96,6 +96,12 @@ function draw() {
 
   //pallini BONUS
   for (let i = 0; i < 6; i++) {
+    if(p_coord > 60){
+      push();
+      fill('#877B85');
+      ellipse(w, h*45.5, 15);
+      pop();
+    }
     ellipse(w + s, h * 45.5, 15);
     s = 25 * i;
   }
