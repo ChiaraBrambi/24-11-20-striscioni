@@ -1,39 +1,36 @@
 //impostazioni riconoscimento vocale
 let lang = navigator.language || 'it-IT';
 let speechRec = new p5.SpeechRec(lang, gotSpeech);
+
+//colori contenitori parole
 let textColorS = '#877B85';
 let textColorD = '#877B85';
 let bButtonColorS = '#F9F9F9';
 let bButtonColorD = '#F9F9F9';
 
 //icone
-let baloonIcon, baloonBIcon, logor,freccia; //icone tutIcon, tutIcon,
+let baloonIcon, baloonBIcon, logor,freccia;
 let xBarra = 20; //lunghezza barra %
 let w, h; //posizione
 let s=0;//ellisse BONUS
 let palette = ['#F9F9F9', '#D5D0D3', '#B7AEB5', '#877B85'];
-
-//variabile suono trombetta
-let alt = 1; //h dei rettangoli suono
-let i = 0; //regola ogni quanto cambia alt
+let i = 0; //contatore che regola ritmo
 let p_coord = 0; //var coordinazione
 
-let feed_piattaforma = 0 ; //n_trombetta = 0; //var piattaforma: quando alt!=1 viene incrementata
-let input_utente = 200 //n_interazione = 0; //var utente usa la trobetta, preme bottone
-//se faccio ntrombetta/niterazione trovo la coordinazione
-
+let input_utente = 0;  //var utente che parla
+let opacità = 210 //opacità rettangolo tutorial
+let pronto //coordinzaione tutorial
 /////////////////////////////////////////////////////////////////////////
 
 function preload() {
   baloonIcon = loadImage("./assets/baloon.png"); //nuvoletta scura
   baloonBIcon = loadImage("./assets/nuvolettaB.png"); //nuvoletta chiara
-  //tut2Icon = loadImage("./assets/Tutorial_barrette.gif")//tutorial
-//  tut1Icon = loadImage("./assets/TutorialP.gif")//tutorial
   logor = loadImage("./assets/logopiccolo.png")//logo ridotto
   freccia = loadImage("./assets/freccia.png");
 }
 
-/////////////////////////////////////////////////////////////////////////
+////////////setup/////////////////////////////////////////////////////////////
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(15); //rallenta
@@ -48,7 +45,7 @@ function setup() {
   mic.start();
 }
 
-//////////riconoscimento voce funzione//////////////////////////////////////////////////////////////
+////////// Riconoscimento vocale parole //////////////////////////////////////////////////////////////
 
 function gotSpeech() {
 
@@ -57,14 +54,19 @@ function gotSpeech() {
       //sx
       bButtonColorS = '#877B85';
       textColorS = '#F9F9F9';
+      input_utente = 1;
+
   }else if (speechRec.resultString =='good') {
     bButtonColorD = '#877B85';
     textColorD = '#F9F9F9';
+    input_utente = 1;
     }
 
     console.log(speechRec.resultString);
   }
+
 }
+
 /////////////////////////////////////////////////////////////////////////
 function draw() {
   background('#F9F9F9'); //chiaro
@@ -98,8 +100,8 @@ function draw() {
   image(freccia, w, h*6, freccia.width / 6, freccia.height / 6);
 
 
-  //BARRA COORDINAZIONE
-  fill('#D5D0D3'); //griga
+//BARRA COORDINAZIONE
+fill('#D5D0D3'); //griga
 rectMode(CENTER);
 rect(w*10, h*45.5, width / 3.5, 15, 20); //rect(x,y,w,h,[tl])
 xBarra = ((width / 3.5) / 100) * p_coord; //altezza barra %, xTot= 439 = width / 3.5
@@ -115,10 +117,11 @@ pop();
     ellipse(w + s, h*45.5, 15);
     s = 25 * i;
     }
+
 /////////////////// LA PARTE SOPRA è STANDARD ///////////////////////////////////////////////
-//microfono
+//microfono input
   let vol = round( mic.getLevel() , 2) *1000;
-  //console.log('volume: ' +  vol);
+  console.log('volume: ' +  vol);
 
 push();
 //CONTENITORI SCRITTE DA PRONUNCIARE
@@ -146,25 +149,10 @@ pop();
     i++;
   }
 
-//TUTORIAL
-push();
-  textSize(16);
-  fill('#B7AEB5'); //3 PALETTE
-if(i<2 || i==2 ){
-document.getElementById("tutorial").style.display= "block";
-//image(tut1Icon, width / 2, height / 2, tut1Icon.width/3.5, tut1Icon.height/3.5);
-text('TUTORIAL', w*10, height / 6*3.7);
-text('Esulta con una parola',w*10, height / 6*3.5);
-}else{
-document.getElementById("tutorial").style.display= "none";
-}
-pop();
-
   //PERCENTUALE
-  if (keyIsDown(ENTER)) {
+  if (input_utente == 1) {
     p_coord = round(random(2,80));
-  } else {
-    p_coord = 0;
+    input_utente = 0;
   }
 
 push();
@@ -181,19 +169,46 @@ pop();
         noStroke();
         strokeWeight(5);
         ellipse(width / 2, height / 2, 100); //cerchio centrale
-        image(baloonBIcon, width / 2, height / 2, baloonBIcon.width / 1.5, baloonBIcon.height / 1.5);
         pop();
-      }else if (i>2 ){ // cambio colore dle bottone centrale: feedback utente
+        image(baloonBIcon, width / 2, height / 2, baloonBIcon.width / 1.5, baloonBIcon.height / 1.5);
+      }else if (vol==0 && i>2 ){ // cambio colore del bottone centrale: feedback utente
       push();
       noFill();
       stroke('#877B85');
       strokeWeight(5);
       ellipse(width / 2, height / 2, 100); //cerchio centrale
-      image(baloonIcon, width / 2, height / 2, baloonIcon.width / 1.5, baloonIcon.height / 1.5); // trombetta scura
       pop();
+      image(baloonIcon, width / 2, height / 2, baloonIcon.width / 1.5, baloonIcon.height / 1.5);
       }
 
-}
+      //rettangolo in opacità
+        push();
+        rectMode(CORNER)
+        fill(255,255,255, opacità);
+        rect(0, 0, width, height);
+        //rettangolo diventta trasparente alla fine del tutorial
+        if (i>2){
+          opacità = 0
+        }
+        pop();
+
+        //TUTORIAL
+        push();
+          textSize(16);
+          fill('#B7AEB5'); //3 PALETTE
+        if(i<2 || i==2 ){
+        document.getElementById("tutorial").style.display= "block";
+        //image(tut1Icon, width / 2, height / 2, tut1Icon.width/3.5, tut1Icon.height/3.5);
+        //text('TUTORIAL', w*10, height / 6*3.7);
+        text('Esulta con una parola',w*10, h*31);
+        }else{
+        document.getElementById("tutorial").style.display= "none";
+        }
+        pop();
+
+
+////////fine draw///////////////////////////////////////////////////////////////////////////////////
+
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
