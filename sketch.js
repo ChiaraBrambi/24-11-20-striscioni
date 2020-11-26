@@ -9,7 +9,7 @@ let bButtonColorS = '#F9F9F9';
 let bButtonColorD = '#F9F9F9';
 
 //icone
-let baloonIcon, baloon_Puntini, logor, freccia;
+let baloonIcon, baloon_Puntini,noParola , logor, freccia;
 let xBarra = 20; //lunghezza barra %
 let w, h; //posizione
 let s = 0; //ellisse BONUS
@@ -20,11 +20,13 @@ let p_coord = 0; //var coordinazione
 let input_utente = 0; //var utente che parla
 let opacità = 210 //opacità rettangolo tutorial
 let pronto //coordinzaione tutorial
+let p = 0; //contatore parole
 /////////////////////////////////////////////////////////////////////////
 
 function preload() {
-  baloonIcon = loadImage("./assets/barretteFeed.gif"); //nuvoletta attiva
-  baloon_Puntini = loadImage("./assets/puntini.gif"); //nuvoletta pensa
+  baloonIcon = loadImage("./assets/barretteParola.gif"); //nuvoletta attiva
+  baloon_Puntini = loadImage("./assets/puntiniScuri.gif"); //nuvoletta pensa
+  noParola = loadImage("./assets/noParola.png"); //nuvoletta attiva
   logor = loadImage("./assets/logopiccolo.png") //logo ridotto
   freccia = loadImage("./assets/freccia.png");
 }
@@ -45,29 +47,8 @@ function setup() {
   mic.start();
 }
 
-////////// Riconoscimento vocale parole //////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-function gotSpeech() {
-  if (i > 3 || i == 3) {
-    if (speechRec.resultValue) {
-      if (speechRec.resultString == 'yeah') {
-        //sx
-        bButtonColorS = '#877B85';
-        textColorS = '#F9F9F9';
-        input_utente = 1;
-
-      } else if (speechRec.resultString == 'good') {
-        bButtonColorD = '#877B85';
-        textColorD = '#F9F9F9';
-        input_utente = 1;
-      }
-
-      console.log(speechRec.resultString);
-    }
-  }
-}
-
-/////////////////////////////////////////////////////////////////////////
 function draw() {
   background('#F9F9F9'); //chiaro
   imageMode(CENTER); //per pittogrammi
@@ -121,7 +102,7 @@ function draw() {
   /////////////////// LA PARTE SOPRA è STANDARD ///////////////////////////////////////////////
   //microfono input
   let vol = round(mic.getLevel(), 2) * 1000;
-  console.log('volume: ' + vol);
+  //console.log('volume: ' + vol);
 
   push();
   //CONTENITORI SCRITTE DA PRONUNCIARE
@@ -139,9 +120,9 @@ function draw() {
   textSize(30);
   textAlign(CENTER, TOP);
   fill(textColorS) //viola
-  text('YEAH', w * 6, height / 2 - 15);
+  text('yeah.', w * 6, height / 2 - 15);
   fill(textColorD) //viola
-  text('GOOD', w * 14, height / 2 - 15);
+  text('good.', w * 14, height / 2 - 15);
   pop();
 
   //ritmo
@@ -165,8 +146,11 @@ function draw() {
   //ICONA CENTRALE CHE REAGISCE AL MIC
   if (i > 1 && i < 3) {
     image(baloon_Puntini, width / 2, height / 2, baloon_Puntini.width / 4, baloon_Puntini.height / 4);
-  } else if (i > 3 || i == 3) { // cambio colore del bottone centrale: feedback utente
+  } else if (i >= 3 && p == 0) { // cambio colore del bottone centrale: feedback utente
     image(baloonIcon, width / 2, height / 2, baloonIcon.width / 4, baloonIcon.height / 4);
+
+  } else if (i >= 3 && p == 1) {
+    image(noParola, width / 2, height / 2, noParola.width / 4, noParola.height / 4);
   }
 
   //rettangolo in opacità
@@ -195,6 +179,34 @@ function draw() {
 }
 ////////fine draw///////////////////////////////////////////////////////////////////////////////////
 
+////////// Riconoscimento vocale parole //////////////////////////////////////////////////////////////
+
+function gotSpeech() {
+//  if(prima_p == 0){
+  if (i >= 3 && p == 0) {
+      console.log('p '+ p);
+    if (speechRec.resultValue) {
+      if (speechRec.resultString == 'yeah') {
+        //sx
+        bButtonColorS = '#877B85';
+        textColorS = '#F9F9F9';
+        input_utente = 1;
+        p = 1;
+
+      } else if (speechRec.resultString == 'good') {
+        bButtonColorD = '#877B85';
+        textColorD = '#F9F9F9';
+        input_utente = 1;
+        p = 1;
+      }
+
+      console.log(speechRec.resultString);
+
+    }
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
