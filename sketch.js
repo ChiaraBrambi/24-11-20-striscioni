@@ -9,23 +9,23 @@ let bButtonColorS = '#F9F9F9';
 let bButtonColorD = '#F9F9F9';
 
 //icone
-let baloonIcon, baloonBIcon, logor,freccia;
+let baloonIcon, baloon_Puntini, logor, freccia;
 let xBarra = 20; //lunghezza barra %
 let w, h; //posizione
-let s=0;//ellisse BONUS
+let s = 0; //ellisse BONUS
 let palette = ['#F9F9F9', '#D5D0D3', '#B7AEB5', '#877B85'];
 let i = 0; //contatore che regola ritmo
 let p_coord = 0; //var coordinazione
 
-let input_utente = 0;  //var utente che parla
+let input_utente = 0; //var utente che parla
 let opacità = 210 //opacità rettangolo tutorial
 let pronto //coordinzaione tutorial
 /////////////////////////////////////////////////////////////////////////
 
 function preload() {
-  baloonIcon = loadImage("./assets/baloon.png"); //nuvoletta scura
-  baloonBIcon = loadImage("./assets/nuvolettaB.png"); //nuvoletta chiara
-  logor = loadImage("./assets/logopiccolo.png")//logo ridotto
+  baloonIcon = loadImage("./assets/barretteFeed.gif"); //nuvoletta attiva
+  baloon_Puntini = loadImage("./assets/puntini.gif"); //nuvoletta pensa
+  logor = loadImage("./assets/logopiccolo.png") //logo ridotto
   freccia = loadImage("./assets/freccia.png");
 }
 
@@ -35,8 +35,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(15); //rallenta
 
-//impostazioni riconoscimento vocale
-  let continuous = true;//continua a registrare
+  //impostazioni riconoscimento vocale
+  let continuous = true; //continua a registrare
   let interim = true;
   speechRec.start(continuous, interim);
 
@@ -50,16 +50,16 @@ function setup() {
 function gotSpeech() {
 
   if (speechRec.resultValue) {
-    if(speechRec.resultString =='yeah'){
+    if (speechRec.resultString == 'yeah') {
       //sx
       bButtonColorS = '#877B85';
       textColorS = '#F9F9F9';
       input_utente = 1;
 
-  }else if (speechRec.resultString =='good') {
-    bButtonColorD = '#877B85';
-    textColorD = '#F9F9F9';
-    input_utente = 1;
+    } else if (speechRec.resultString == 'good') {
+      bButtonColorD = '#877B85';
+      textColorD = '#F9F9F9';
+      input_utente = 1;
     }
 
     console.log(speechRec.resultString);
@@ -74,7 +74,7 @@ function draw() {
   noStroke();
 
   w = width / 20;
-    h = height / 50;
+  h = height / 50;
 
   //testo caratteristiche
   textFont('quicksand');
@@ -82,134 +82,131 @@ function draw() {
   textStyle(BOLD);
 
   //testo centrale
-    textSize(16);
-    fill('#877B85'); //4° colore PALETTE
-    text('PARTITA COOD O1', w*10, h*5);
-    fill('#B7AEB5'); //3° PALETTE
-    textSize(13);
-    text('SQUADRA1-SQUADRA2', w*10, h*6.5);
+  textSize(16);
+  fill('#877B85'); //4° colore PALETTE
+  text('PARTITA COOD O1', w * 10, h * 5);
+  fill('#B7AEB5'); //3° PALETTE
+  textSize(13);
+  text('SQUADRA1-SQUADRA2', w * 10, h * 6.5);
 
-    //testo sotto
-    textSize(14);
-    textAlign(CORNER);
-    text('BONUS',w*1.2, h*43);
+  //testo sotto
+  textSize(14);
+  textAlign(CORNER);
+  text('BONUS', w * 1.2, h * 43);
 
   //logo a destra
-  image(logor, w * 18.5, h*6, logor.width / 4.5, logor.height / 4.5);
+  image(logor, w * 18.5, h * 6, logor.width / 4.5, logor.height / 4.5);
   //freccia
-  image(freccia, w, h*6, freccia.width / 6, freccia.height / 6);
+  image(freccia, w, h * 6, freccia.width / 6, freccia.height / 6);
 
 
-//BARRA COORDINAZIONE
-fill('#D5D0D3'); //griga
-rectMode(CENTER);
-rect(w*10, h*45.5, width / 3.5, 15, 20); //rect(x,y,w,h,[tl])
-xBarra = ((width / 3.5) / 100) * p_coord; //altezza barra %, xTot= 439 = width / 3.5
-push();
-rectMode(CORNER);
-fill('#877B85'); //viola
-//width/7 è la metà della barra, che è lunga width/3.5
-rect(w*10 - width / 7, h*45.5-7.5 , xBarra, 15, 20);
-pop();
+  //BARRA COORDINAZIONE
+  fill('#D5D0D3'); //griga
+  rectMode(CENTER);
+  rect(w * 10, h * 45.5, width / 3.5, 15, 20); //rect(x,y,w,h,[tl])
+  xBarra = ((width / 3.5) / 100) * p_coord; //altezza barra %, xTot= 439 = width / 3.5
+  push();
+  rectMode(CORNER);
+  fill('#877B85'); //viola
+  //width/7 è la metà della barra, che è lunga width/3.5
+  rect(w * 10 - width / 7, h * 45.5 - 7.5, xBarra, 15, 20);
+  pop();
 
-//pallini BONUS
-  for(let i=0; i<6;i++){
-    ellipse(w + s, h*45.5, 15);
+  //pallini BONUS
+  for (let i = 0; i < 6; i++) {
+    ellipse(w + s, h * 45.5, 15);
     s = 25 * i;
-    }
+  }
 
-/////////////////// LA PARTE SOPRA è STANDARD ///////////////////////////////////////////////
-//microfono input
-  let vol = round( mic.getLevel() , 2) *1000;
-  console.log('volume: ' +  vol);
+  /////////////////// LA PARTE SOPRA è STANDARD ///////////////////////////////////////////////
+  //microfono input
+  let vol = round(mic.getLevel(), 2) * 1000;
+  console.log('volume: ' + vol);
 
-push();
-//CONTENITORI SCRITTE DA PRONUNCIARE
-rectMode(CENTER);
-stroke(textColorS)//viola
-strokeWeight(5);
-fill(bButtonColorS)//bianco
-rect(w*6,height/2,w*4,60,40);
-stroke(textColorD)//viola
-strokeWeight(5);
-fill(bButtonColorD)//bianco
-rect(w*14,height/2,w*4,60,40);
+  push();
+  //CONTENITORI SCRITTE DA PRONUNCIARE
+  rectMode(CENTER);
+  stroke(textColorS) //viola
+  strokeWeight(5);
+  fill(bButtonColorS) //bianco
+  rect(w * 6, height / 2, w * 4, 60, 40);
+  stroke(textColorD) //viola
+  strokeWeight(5);
+  fill(bButtonColorD) //bianco
+  rect(w * 14, height / 2, w * 4, 60, 40);
 
-noStroke();
-textSize(30);
-textAlign(CENTER,TOP);
-fill(textColorS)//viola
-text('YEAH',w*6,height/2-15);
-fill(textColorD)//viola
-text('GOOD',w*14,height/2-15);
-pop();
+  noStroke();
+  textSize(30);
+  textAlign(CENTER, TOP);
+  fill(textColorS) //viola
+  text('YEAH', w * 6, height / 2 - 15);
+  fill(textColorD) //viola
+  text('GOOD', w * 14, height / 2 - 15);
+  pop();
 
-//ritmo
+  //ritmo
   if (frameCount % 50 == 0) { //multiplo di 50 incrementa i
     i++;
   }
 
   //PERCENTUALE
   if (input_utente == 1) {
-    p_coord = round(random(2,80));
+    p_coord = round(random(2, 80));
     input_utente = 0;
   }
 
-push();
+  push();
   textAlign(CORNER);
   fill('#B7AEB5'); //3° PALETTE
-  text('COORDINAZIONE  ' + p_coord + ' %', w*10, h*43);
-pop();
+  text('COORDINAZIONE  ' + p_coord + ' %', w * 10, h * 43);
+  pop();
 
 
-    //ICONA CENTRALE CHE REAGISCE AL MIC
-    if (vol>0 && i>2) {
-        push();//tasto scuro attivo
-        fill('#877B85');
-        noStroke();
-        strokeWeight(5);
-        ellipse(width / 2, height / 2, 100); //cerchio centrale
-        pop();
-        image(baloonBIcon, width / 2, height / 2, baloonBIcon.width / 1.5, baloonBIcon.height / 1.5);
-      }else if (vol==0 && i>2 ){ // cambio colore del bottone centrale: feedback utente
-      push();
-      noFill();
-      stroke('#877B85');
-      strokeWeight(5);
-      ellipse(width / 2, height / 2, 100); //cerchio centrale
-      pop();
-      image(baloonIcon, width / 2, height / 2, baloonIcon.width / 1.5, baloonIcon.height / 1.5);
-      }
+  //ICONA CENTRALE CHE REAGISCE AL MIC
+  if ( i>1 && i <3 ) {
+    image(baloon_Puntini, width / 2, height / 2, baloon_Puntini.width / 4, baloon_Puntini.height / 4);
+  } else if ( i > 3 ||i == 3) { // cambio colore del bottone centrale: feedback utente
+    image(baloonIcon, width / 2, height / 2, baloonIcon.width / 4, baloonIcon.height / 4);
+  }
 
-      //rettangolo in opacità
-        push();
-        rectMode(CORNER)
-        fill(255,255,255, opacità);
-        rect(0, 0, width, height);
-        //rettangolo diventta trasparente alla fine del tutorial
-        if (i>2){
-          opacità = 0
-        }
-        pop();
+  //rettangolo in opacità
+  push();
+  rectMode(CORNER)
+  fill(255, 255, 255, opacità);
+  rect(0, 0, width, height);
+  //rettangolo diventta trasparente alla fine del tutorial
+  if (i > 1) {
+    opacità = 0
+  }
+  pop();
 
-        //TUTORIAL
-        push();
-          textSize(16);
-          fill('#B7AEB5'); //3 PALETTE
-        if(i<2 || i==2 ){
-        document.getElementById("tutorial").style.display= "block";
-        //image(tut1Icon, width / 2, height / 2, tut1Icon.width/3.5, tut1Icon.height/3.5);
-        //text('TUTORIAL', w*10, height / 6*3.7);
-        text('Esulta con una parola',w*10, h*31);
-        }else{
-        document.getElementById("tutorial").style.display= "none";
-        }
-        pop();
+  //TUTORIAL
+  push();
+  textSize(16);
+  fill('#B7AEB5'); //3 PALETTE
+  if (i < 1 || i == 1) {
+  document.getElementById("tutorial").style.display = "block";
+    //image(tut1Icon, width / 2, height / 2, tut1Icon.width/3.5, tut1Icon.height/3.5);
+    //text('TUTORIAL', w*10, height / 6*3.7);
+    text('Scegli una parola', w * 10, h * 31);
+    text('ESULTA QUANDO RICHIESTO', w * 10, h * 33);
+  //   if (vol > 0 && i <= 2) {
+  //     text('TI SENTO', w * 10, h * 33);
+  //     document.getElementById("tutorial").style.display = "block";
+  //   } else {
+  //     text('PARLA QUANDO TI VIENE RICHIESTO', w * 10, h * 33);
+  //     document.getElementById("tutorial").style.display = "block";
+  //   }
+   } else {
+     document.getElementById("tutorial").style.display = "none";
+  // }
+  // pop();
+    }
 
-
-////////fine draw///////////////////////////////////////////////////////////////////////////////////
-
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
 }
+  ////////fine draw///////////////////////////////////////////////////////////////////////////////////
+
+
+  function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+  }
