@@ -21,11 +21,12 @@ let input_utente = 0; //var utente che parla
 let opacità = 210 //opacità rettangolo tutorial
 let pronto //coordinzaione tutorial
 let p = 0; //contatore parole
+
 /////////////////////////////////////////////////////////////////////////
 
 function preload() {
   baloonIcon = loadImage("./assets/barretteParola.gif"); //nuvoletta attiva
-  baloon_Puntini = loadImage("./assets/puntiniScuri.gif"); //nuvoletta pensa
+  baloon_Puntini = loadImage("./assets/scuro.gif"); //nuvoletta pensa
   noParola = loadImage("./assets/noParola.png"); //nuvoletta attiva
   logor = loadImage("./assets/logopiccolo.png") //logo ridotto
   freccia = loadImage("./assets/freccia.png");
