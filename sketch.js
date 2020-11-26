@@ -143,7 +143,7 @@ pop();
 
 //ritmo
   if (frameCount % 50 == 0) { //multiplo di 50 incrementa i
-    i++
+    i++;
   }
 
 //TUTORIAL
