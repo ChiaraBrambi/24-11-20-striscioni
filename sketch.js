@@ -24,6 +24,9 @@ let opacità = 210 //opacità rettangolo tutorial
 let pronto //coordinzaione tutorial
 let p = 0; //contatore parole
 
+// var myRec = new p5.SpeechRec('en-US', parseResult); // new P5.SpeechRec object
+// 	myRec.continuous = true; // do continuous recognition
+// 	myRec.interimResults = true; // allow partial recognition (faster, less accurate)
 /////////////////////////////////////////////////////////////////////////
 
 function preload() {
@@ -45,9 +48,9 @@ function setup() {
   let interim = true;
   speechRec.start(continuous, interim);
 
-  //microfono get: Create an Audio input
-  mic = new p5.AudioIn();
-  mic.start();
+  // //microfono get: Create an Audio input
+  // mic = new p5.AudioIn();
+  // mic.start();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -110,7 +113,7 @@ function draw() {
 
   /////////////////// LA PARTE SOPRA è STANDARD ///////////////////////////////////////////////
   //microfono input
-  let vol = round(mic.getLevel(), 2) * 1000;
+  //let vol = round(mic.getLevel(), 2) * 1000;
   //console.log('volume: ' + vol);
 
   push();
