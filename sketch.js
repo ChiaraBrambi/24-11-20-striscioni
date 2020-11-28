@@ -1,5 +1,7 @@
 //impostazioni riconoscimento vocale
-let lang = navigator.language || 'it-IT';
+
+
+let lang = 'it-IT';
 let speechRec = new p5.SpeechRec(lang, gotSpeech);
 
 //colori contenitori parole
@@ -127,9 +129,9 @@ function draw() {
   textSize(30);
   textAlign(CENTER, TOP);
   fill(textColorS) //viola
-  text('yeah.', w * 6, height / 2 - 15);
+  text('forza.', w * 6, height / 2 - 15);
   fill(textColorD) //viola
-  text('good.', w * 14, height / 2 - 15);
+  text('bravi.', w * 14, height / 2 - 15);
   pop();
 
   //ritmo
@@ -193,14 +195,14 @@ function gotSpeech() {
   if (i >= 3 && p == 0) {
       console.log('p '+ p);
     if (speechRec.resultValue) {
-      if (speechRec.resultString == 'yeah') {
+      if (speechRec.resultString == 'forza') {
         //sx
         bButtonColorS = '#877B85';
         textColorS = '#F9F9F9';
         input_utente = 1;
         p = 1;
 
-      } else if (speechRec.resultString == 'good') {
+      } else if (speechRec.resultString == 'bravi') {
         bButtonColorD = '#877B85';
         textColorD = '#F9F9F9';
         input_utente = 1;
