@@ -156,12 +156,12 @@ function draw() {
 
 
   //ICONA CENTRALE CHE REAGISCE AL MIC
-  if (i > 1 && i < 3) {
-    image(baloon_Puntini, width / 2, height / 2, baloon_Puntini.width / 4, baloon_Puntini.height / 4);
-  } else if (i >= 3 && p == 0) { // cambio colore del bottone centrale: feedback utente
+  // if (i > 1 && i < 3) {
+  //   image(baloon_Puntini, width / 2, height / 2, baloon_Puntini.width / 4, baloon_Puntini.height / 4);
+  // } else
+  if (i >1 && p == 0) { // cambio colore del bottone centrale: feedback utente
     image(baloonIcon, width / 2, height / 2, baloonIcon.width / 4, baloonIcon.height / 4);
-
-  } else if (i >= 3 && p == 1) {
+  } else if (i > 1 && p == 1) {
     image(noParola, width / 2, height / 2, noParola.width / 4, noParola.height / 4);
   }
 
@@ -195,7 +195,7 @@ function draw() {
 
 function gotSpeech() {
 //  if(prima_p == 0){
-  if (i >= 3 && p == 0) {
+  if (i >1 && p == 0) {
       console.log('p '+ p);
     if (speechRec.resultValue) {
       if (speechRec.resultString == 'forza') {
