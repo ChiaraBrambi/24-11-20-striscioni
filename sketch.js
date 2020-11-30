@@ -17,6 +17,7 @@ let w, h; //posizione
 let s = 0; //ellisse BONUS
 let palette = ['#F9F9F9', '#D5D0D3', '#B7AEB5', '#877B85'];
 let i = 0; //contatore che regola ritmo
+let i_ritardo;
 let p_coord = 0; //var coordinazione
 
 let input_utente = 0; //var utente che parla
@@ -143,15 +144,15 @@ function draw() {
   }
 
   //PERCENTUALE
-  if (input_utente == 1) {
-    p_coord = round(random(2, 80));
+  if (input_utente == 1 && i>i_ritardo+1) {
+    p_coord = round(random(10, 80));
     input_utente = 0;
   }
 
   push();
   textAlign(CORNER);
   fill('#B7AEB5'); //3° PALETTE
-  text('COORDINAZIONE  ' + p_coord + ' %', w * 10, h * 43);
+  text('SCELTA DA  ' + p_coord + ' % DEGLI UTENTI', w * 10, h * 43);
   pop();
 
 
@@ -187,7 +188,6 @@ function draw() {
       } else {
     document.getElementById("tutorial").style.display = "none";
   }
-
 }
 ////////fine draw///////////////////////////////////////////////////////////////////////////////////
 
@@ -204,12 +204,14 @@ function gotSpeech() {
         textColorS = '#F9F9F9';
         input_utente = 1;
         p = 1;
+        i_ritardo = i;
 
       } else if (speechRec.resultString == 'bravi') {
         bButtonColorD = '#877B85';
         textColorD = '#F9F9F9';
         input_utente = 1;
         p = 1;
+        i_ritardo = i;
       }
 
       console.log(speechRec.resultString);
