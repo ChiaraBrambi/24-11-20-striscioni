@@ -210,14 +210,11 @@ if (bonus5 == 1){
   }
 
   //PERCENTUALE
-if (input_utente == 1 && i== i_ritardo+1) {
-  p_coord = round(random(10, 80));
-  input_utente = 0;//per bloccare ad una sola percentuale e non darne mille
-}
-//per aprire l'altra pagina
-if(input_utente == 0 && i==i_ritardo+2){
-  window.open('../indexPausa.html','_self');//doppio puntino per andare nella cartella sopra
-}
+  if (input_utente == 1 && i>i_ritardo+1) {
+    p_coord = round(random(10, 80));
+    input_utente = 0;
+  }
+
   push();
   textAlign(CORNER);
   fill('#B7AEB5'); //3° PALETTE
