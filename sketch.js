@@ -29,6 +29,18 @@ let p = 0; //contatore parole
 // var myRec = new p5.SpeechRec('en-US', parseResult); // new P5.SpeechRec object
 // 	myRec.continuous = true; // do continuous recognition
 // 	myRec.interimResults = true; // allow partial recognition (faster, less accurate)
+
+
+//Volume daspo
+let mic;
+//variabili per DASPO
+let daspo = false; //variabile che dice se daspo è attiva in questo momento
+let daspo_counter = 0; //variabile che conta il numero di daspo
+let op = 0; //opacità rettangolo daspo
+let incremento_daspo = 0;
+let timeout_daspo;//variabile per riavviare la funzione Timeout del daspo
+let daspo_3, daspo_4, daspo_5;
+let gif_daspo;
 /////////////////////////////////////////////////////////////////////////
 
 function preload() {
@@ -37,6 +49,9 @@ function preload() {
   noParola = loadImage("./assets/noParola.png"); //nuvoletta attiva
   logor = loadImage("./assets/logopiccolo.png") //logo ridotto
   freccia = loadImage("./assets/freccia.png");
+  daspo_3 = loadImage("./assets/daspo3.gif");
+  daspo_4 = loadImage("./assets/daspo4.gif");
+  daspo_5 = loadImage("./assets/daspo5.gif");
 }
 
 ////////////setup/////////////////////////////////////////////////////////////
@@ -51,8 +66,8 @@ function setup() {
   speechRec.start(continuous, interim);
 
   // //microfono get: Create an Audio input
-  // mic = new p5.AudioIn();
-  // mic.start();
+   mic = new p5.AudioIn();
+   mic.start();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -222,8 +237,75 @@ if (bonus5 == 1){
   pop();
 
 
+//volume per daspo
+let vol = mic.getLevel();
+let vol_1 = round(map(vol, 0, 1, 0, 100));
+console.log("volume " + vol_1)
+
+
+
+//DASPO
+  //daspo condizione
+  if (vol_1>30 && i > 1) {
+    daspo = true;
+  } else if (vol_1<30 && i < 1) {
+    daspo = false;
+    op = 0;
+  }
+
+//attivare funzioni daspo
+  if (daspo == true) {
+    daspoAttiva();
+  }
+
+  incremento_daspo = 3000 + (daspo_counter/46)*1000;
+  if (incremento_daspo > 5000){
+    incremento_daspo = 5000;
+  }
+
+  console.log("tempo daspo " + incremento_daspo)
+
 }
 ////////fine draw///////////////////////////////////////////////////////////////////////////////////
+
+
+//funzioni per attivare la daspo
+function daspoAttiva() {
+  daspo_counter++;
+  op = 210;
+  alt = 1;
+
+  push();
+  rectMode(CORNER);
+  fill(255, 255, 255, op);
+  rect(0, 0, width, height);
+  pop();
+
+  if (incremento_daspo==3000){
+    gif_daspo = daspo_3
+  } else if (incremento_daspo==4000){
+    gif_daspo = daspo_4
+  } else if (incremento_daspo==5000){
+    gif_daspo = daspo_5
+  }
+
+
+  image(gif_daspo, width / 10, 3*height / 4, gif_daspo.width/2 , gif_daspo.height/2 );
+
+  timeout_daspo = setTimeout(daspoNonAttiva, incremento_daspo);
+}
+
+//funzione per disattivare la daspo cambiando la variabile
+function daspoNonAttiva() {
+  daspo = false;
+}
+
+//riavvia il timer per daspo
+function nonAttivafine(){
+    clearTimeout(timeout_daspo);
+}
+
+
 
 ////////// Riconoscimento vocale parole //////////////////////////////////////////////////////////////
 
